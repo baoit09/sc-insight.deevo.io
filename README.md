@@ -1,4 +1,11 @@
 # network-insight-service
+# Pre-requisites
+- NodeJS 8.X
+  - curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+  - nano nodesource_setup.sh
+  - sudo bash nodesource_setup.sh
+  - sudo apt-get install -y nodejs
+- sudo apt-get install -y node-gyp
 # To start app:
 1. clone this repo from github
 2. cd to network-insight-service
