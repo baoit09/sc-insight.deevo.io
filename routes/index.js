@@ -17,6 +17,13 @@ router.get('/block/:block_num', function (req, res, next) {
   res.render('templates/block-info', { channelID: channelID, channelName: channelName, num: block_num });
 });
 
+router.get('/txid/:txid', function (req, res, next) {
+  let channelID = 'mychannel';
+  let channelName = constants.ChannelDict[channelID];
+  let txid = req.params.txid;
+  res.render('templates/transaction-info', { channelID: channelID, channelName: channelName, txid: txid });
+});
+
 router.get('/channel/:channelID', function (req, res, next) {
   let channelID = req.params.channelID;
   let channelName = constants.ChannelDict[channelID];
