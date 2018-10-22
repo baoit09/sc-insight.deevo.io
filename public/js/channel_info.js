@@ -61,3 +61,30 @@ function getChannelInfo() {
             }
         })
 }
+
+function search() {
+    $('#search-info').html('');
+    $("#search-info-container").css("margin-top", "");
+    $('#object-info').html('');
+    let type = $('#select-search-type option:selected').val();
+    let id = $('#text-object-search').val();
+    if (id === '') {
+        alert("Please provide ID");
+        return;
+    }
+
+    switch (type) {
+        case '1':
+            getTransaction(id);
+            break;
+        case '2':
+            let chaincode = $('#select-search-chaincode option:selected').val();
+            if (chaincode === '0') {
+                alert("Please Choose a chaincode");
+                return;
+            }
+            getLog(id, chaincode);
+            break;
+        default: break;
+    }
+}

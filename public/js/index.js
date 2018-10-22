@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    console.log(chaincode);
+    hideSearchError();
+
     if (chaincode === undefined || chaincode === null) {
         let info = $('#error-channel-div');
         info.html('');
@@ -8,17 +9,13 @@ $(document).ready(function () {
         return;
     }
 
-    hideSearchError();
-    getChannelInfo();
-    $('#select-block-number').on('change', function () {
-        getBlockInfo(this.value);
+    $('#text-object-search').keypress(function (e) {
+        if (e.which == 13) {
+            search();
+        }
     });
 
-    let selectedType = $('#select-search-type option:selected').val();
-    searchTypeChanged(selectedType);
-    $('#select-search-type').on('change', function () {
-        searchTypeChanged(this.value);
-    });
+    getChannelInfo();
 });
 
 
@@ -75,5 +72,67 @@ function showLatestBlocks(count) {
         </div>
         </div>`;
         tb.append(html);
+    }
+}
+
+function getDoc(id, chaincode) {
+    hideSearchError();
+
+    let obj = {
+        selector: {
+            "id": id
+        }
+    }
+
+    request = {
+        fcn: "getQueryResultForQueryString",
+        obj: JSON.stringify(obj)
+    }
+
+    $.post(`/api/v1/insight/org/org1/channel/${channelID}/chaincode/${chaincode}/query`,
+        request,
+        function (results) {
+
+            if (results.length < 1) {
+                let error = {
+                    responseText: 'Document not found'
+                }
+                showSearchError(error);
+                return
+            }
+
+            let doc = results[0];
+            console.log(doc.Record);
+
+            let container = $('#object-info-container');
+            container.show();
+
+            var info = $('#object-info');
+            info.html(`<pre>${JSON.stringify(doc.Record, null, 2)}</pre>`);
+        }, 'json')
+        .fail(function (e) {
+            showSearchError(e);
+        })
+}
+
+function search() {
+    $('#search-info').html('');
+    $("#search-info-container").css("margin-top", "");
+    $('#object-info').html('');
+    let type = $(`input[type='radio'][name='select-search-type']:checked`).val();
+    let id = $('#text-object-search').val();
+    if (id === '') {
+        alert("Please provide ID");
+        return;
+    }
+
+    switch (type) {
+        case '1':
+            getTransaction(id);
+            break;
+        case '2':
+            getDoc(id, chaincode);
+            break;
+        default: break;
     }
 }

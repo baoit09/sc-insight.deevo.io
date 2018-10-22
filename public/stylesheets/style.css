@@ -21,3 +21,23 @@
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
+
+input[type='radio'] { transform: scale(1.5); }
+
+.radio-label {
+  font-size: 13pt;
+  margin-left: 20px !important;
+}
+
+.radio-group {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.search-result {
+  margin-top:20px;
+}
+
+.error-alert {
+  margin-top:20px;
+}
