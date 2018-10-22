@@ -1,8 +1,23 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.navbar-header {
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16pt;
+  color: #777777;
 }
 
-a {
-  color: #00B7FF;
+.navbar{
+  min-height: 70px !important;
+}
+
+.show-grid {
+
+}
+
+.grid-item {
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }

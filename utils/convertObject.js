@@ -1,4 +1,5 @@
 'use strict';
+const constants = require(__dirname + '/constants');
 
 function convertChannelInfo2JSON(info) {
     return {
@@ -46,7 +47,7 @@ function convertBlockTransaction2JSON(transaction) {
         time: transaction.payload.header.channel_header.timestamp,
         tx_id: transaction.payload.header.channel_header.tx_id,
         creator: transaction.payload.header.signature_header.creator.Mspid,
-        channel: transaction.payload.header.channel_header.channel_id,
+        channel: constants.ChannelDict[transaction.payload.header.channel_header.channel_id],
         actions: actions
     }
 }
@@ -79,7 +80,7 @@ function convertTransaction2JSON(transaction) {
         time: header.channel_header.timestamp,
         tx_id: header.channel_header.tx_id,
         creator: header.signature_header.creator.Mspid,
-        channel: header.channel_header.channel_id,
+        channel: constants.ChannelDict[header.channel_header.channel_id],
         actions: actions
     }
 }
@@ -102,3 +103,16 @@ function convertChaincodeArray2JSON(chaincodes) {
 }
 
 module.exports.convertChaincodeArray2JSON = convertChaincodeArray2JSON;
+
+function convertChannel2JSON(channel) {
+    return {
+        channel_name: constants.ChannelDict[channel.channel_id],
+        channel_id: channel.channel_id,
+    }
+}
+
+function convertChannelArray2JSON(channels) {
+    return channels.channels.map(convertChannel2JSON).sort(function(a, b) {return a.channel_name.localeCompare(b.channel_name)});
+}
+
+module.exports.convertChannelArray2JSON = convertChannelArray2JSON;

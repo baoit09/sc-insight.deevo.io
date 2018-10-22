@@ -186,13 +186,13 @@ router.route('/org/:org')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name')
+router.route('/org/:org/channel/:channel_id')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return channel.queryInfo()
@@ -208,14 +208,14 @@ router.route('/org/:org/channel/:channel_name')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/block/:block')
+router.route('/org/:org/channel/:channel_id/block/:block')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         let block = parseInt(req.params.block);
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return channel.queryBlock(block)
@@ -231,14 +231,14 @@ router.route('/org/:org/channel/:channel_name/block/:block')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/tx/:transaction_id')
+router.route('/org/:org/channel/:channel_id/tx/:transaction_id')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         let transaction_id = req.params.transaction_id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return channel.queryTransaction(transaction_id)
@@ -254,13 +254,13 @@ router.route('/org/:org/channel/:channel_name/tx/:transaction_id')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/orderers')
+router.route('/org/:org/channel/:channel_id/orderers')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return res.json(channel.getOrderers());
@@ -271,13 +271,13 @@ router.route('/org/:org/channel/:channel_name/orderers')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/peers')
+router.route('/org/:org/channel/:channel_id/peers')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return res.json(channel.getPeers());
@@ -287,13 +287,13 @@ router.route('/org/:org/channel/:channel_name/peers')
             });
     });
 // ======================================================
-router.route('/org/:org/channel/:channel_name/chaincodes')
+router.route('/org/:org/channel/:channel_id/chaincodes')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 return channel.queryInstantiatedChaincodes(channel.getPeers()[0], true)
@@ -309,15 +309,15 @@ router.route('/org/:org/channel/:channel_name/chaincodes')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/id/:id')
+router.route('/org/:org/channel/:channel_id/chaincode/:chaincode/id/:id')
     .get(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         let chaincode = req.params.chaincode;
         let id = req.params.id;
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 let requestData = {
@@ -343,10 +343,10 @@ router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/id/:id')
     });
 // ======================================================
 
-router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/query')
+router.route('/org/:org/channel/:channel_id/chaincode/:chaincode/query')
     .post(function (req, res, next) {
         let org = req.params.org;
-        let channel_name = req.params.channel_name;
+        let channel_id = req.params.channel_id;
         let chaincode = req.params.chaincode;
         let data = req.body;
         let fcn = data.fcn;
@@ -359,7 +359,7 @@ router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/query')
 
         return encroll(org)
             .then(() => {
-                return client.getChannel(channel_name);
+                return client.getChannel(channel_id);
             })
             .then((channel) => {
                 let requestData = {
@@ -386,10 +386,10 @@ router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/query')
     });
 // ======================================================
 
-// router.route('/org/:org/channel/:channel_name/chaincode/:chaincode')
+// router.route('/org/:org/channel/:channel_id/chaincode/:chaincode')
 //     .post(function (req, res, next) {
 //         let org = req.params.org;
-//         let channel_name = req.params.channel_name;
+//         let channel_id = req.params.channel_id;
 //         let chaincode = req.params.chaincode;
 //         let data = req.body;
 //         let fcn = data.fcn;
@@ -413,7 +413,7 @@ router.route('/org/:org/channel/:channel_name/chaincode/:chaincode/query')
 //             })
 //             .then((requestData) => {
 //                 // client.loadFromConfig('configs/fabric-network-config/connection-profile.yaml');
-//                 let channel = client.getChannel(channel_name);
+//                 let channel = client.getChannel(channel_id);
 //                 return submitTransaction(requestData, channel)
 //             })
 //             .then(status => {
