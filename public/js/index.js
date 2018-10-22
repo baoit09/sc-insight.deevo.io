@@ -133,6 +133,9 @@ function search() {
         case '2':
             getDoc(id, chaincode);
             break;
+        // case '3':
+        //     getHistory(id, chaincode);
+        //     break;
         default: break;
     }
 }

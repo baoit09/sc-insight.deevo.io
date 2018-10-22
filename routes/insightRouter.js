@@ -386,6 +386,43 @@ router.route('/org/:org/channel/:channel_id/chaincode/:chaincode/query')
     });
 // ======================================================
 
+
+router.route('/org/:org/channel/:channel_id/chaincode/:chaincode/history/:object_id')
+    .get(function (req, res, next) {
+        let org = req.params.org;
+        let channel_id = req.params.channel_id;
+        let chaincode = req.params.chaincode;
+        let object_id = req.params.object_id;
+
+        return encroll(org)
+            .then(() => {
+                return client.getChannel(channel_id);
+            })
+            .then((channel) => {
+                let requestData = {
+                    chaincodeId: chaincode,
+                    fcn: 'getHistoryOfObject',
+                    args: [object_id]
+                };
+                return query(channel, requestData)
+            })
+            .then(data => {
+                if (!data) {
+                    res.writeHead(404, {
+                        'Content-Type': 'text/plain'
+                    });
+                    res.end('Query failed');
+                }
+                else {
+                    res.json(data);
+                }
+            })
+            .catch(err => {
+                if (err) return next(err);
+            });
+    });
+// ======================================================
+
 // router.route('/org/:org/channel/:channel_id/chaincode/:chaincode')
 //     .post(function (req, res, next) {
 //         let org = req.params.org;
