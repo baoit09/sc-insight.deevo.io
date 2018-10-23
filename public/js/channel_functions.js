@@ -197,6 +197,49 @@ function getLog(id, chaincode) {
         })
 }
 
+function getDoc(id, chaincode) {
+    hideSearchError();
+
+    let obj = {
+        selector: {
+            "id": id
+        }
+    }
+
+    request = {
+        fcn: "getQueryResultForQueryString",
+        obj: JSON.stringify(obj)
+    }
+
+    $.post(`/api/v1/insight/org/org1/channel/${channelID}/chaincode/${chaincode}/query`,
+        request,
+        function (results) {
+
+            if (results.length < 1) {
+                let error = {
+                    responseText: 'Document not found'
+                }
+                showSearchError(error);
+                return
+            }
+
+            let doc = results[0].Record;
+
+            if (doc.hasOwnProperty('content')) {
+                doc.content = JSON.parse(doc.content);
+            }
+
+            let container = $('#object-info-container');
+            container.show();
+
+            var info = $('#object-info');
+            info.html(`<pre>${JSON.stringify(doc, null, 2)}</pre>`);
+        }, 'json')
+        .fail(function (e) {
+            showSearchError(e);
+        })
+}
+
 function searchTypeChanged(type) {
     let selectChaincode = $('#select-search-chaincode-container');
     switch (type) {
