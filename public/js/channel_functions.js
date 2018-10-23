@@ -227,11 +227,11 @@ function getDoc(id, chaincode) {
 
             if (doc.hasOwnProperty('content')) {
                 var content = doc.content;
-                if (content[0] === '"') {
-                    content = content.slice(1, -1);
-                    content = content.split('\\"').join('"');
+                content = JSON.parse(content);
+                while ((typeof content) === 'string') {
+                    content = JSON.parse(content);
                 }
-                doc.content = JSON.parse(content);
+                doc.content = content;
             }
 
             let container = $('#object-info-container');
