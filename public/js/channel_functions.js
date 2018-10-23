@@ -202,7 +202,9 @@ function getDoc(id, chaincode) {
 
     let obj = {
         selector: {
-            "id": id
+            id: {
+    			$regex: `.*${id}.*`
+			}
         }
     }
 
@@ -222,23 +224,26 @@ function getDoc(id, chaincode) {
                 showSearchError(error);
                 return
             }
+            var htmlContent = ``;
+            for (let obj of results) {
+                let doc = obj.Record;
 
-            let doc = results[0].Record;
-
-            if (doc.hasOwnProperty('content')) {
-                var content = doc.content;
-                content = JSON.parse(content);
-                while ((typeof content) === 'string') {
+                if (doc.hasOwnProperty('content')) {
+                    var content = doc.content;
                     content = JSON.parse(content);
+                    while ((typeof content) === 'string') {
+                        content = JSON.parse(content);
+                    }
+                    doc.content = content;
                 }
-                doc.content = content;
+                htmlContent += `<strong>${obj.Key}:</strong><pre>${JSON.stringify(doc, null, 2)}</pre>`;
             }
 
             let container = $('#object-info-container');
             container.show();
 
             var info = $('#object-info');
-            info.html(`<pre>${JSON.stringify(doc, null, 2)}</pre>`);
+            info.html(htmlContent);
         }, 'json')
         .fail(function (e) {
             showSearchError(e);
