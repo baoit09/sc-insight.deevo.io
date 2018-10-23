@@ -70,3 +70,8 @@
 #btn-search {
   width: 100%;
 }
+
+#siteseal {
+  position: fixed;
+  bottom: 0;
+}
