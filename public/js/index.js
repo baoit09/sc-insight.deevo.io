@@ -101,14 +101,17 @@ function getDoc(id, chaincode) {
                 return
             }
 
-            let doc = results[0];
-            console.log(doc.Record);
+            let doc = results[0].Record;
+
+            if (doc.hasOwnProperty('content')) {
+                doc.content = JSON.parse(doc.content);
+            }
 
             let container = $('#object-info-container');
             container.show();
 
             var info = $('#object-info');
-            info.html(`<pre>${JSON.stringify(doc.Record, null, 2)}</pre>`);
+            info.html(`<pre>${JSON.stringify(doc, null, 2)}</pre>`);
         }, 'json')
         .fail(function (e) {
             showSearchError(e);

@@ -68,9 +68,9 @@ function hideBlockError() {
 function createTransactionHTML(transaction, index) {
     var tb = ``;
     if (index > 0) {
-        tb = `<tr><th>Transaction ${index}</th><td><div><table class="table table-bordered table-striped" style="margin-bottom:0px;">`;
+        tb = `<tr><th class='td-left'>Transaction ${index}</th><td><div><table class="table table-bordered table-striped" style="margin-bottom:0px;">`;
     }
-    tb += `<tr><th>Transaction ID</th><td>${transaction.tx_id}</td></tr>`;
+    tb += `<tr><th class='td-left'>Transaction ID</th><td>${transaction.tx_id}</td></tr>`;
     tb += `<tr><th>Time</th><td>${transaction.time}</td></tr>`;
     tb += `<tr><th>Type</th><td>${transaction.type}</td></tr>`;
     tb += `<tr><th>Channel</th><td>${transaction.channel}</td></tr>`;
