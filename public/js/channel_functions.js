@@ -226,7 +226,12 @@ function getDoc(id, chaincode) {
             let doc = results[0].Record;
 
             if (doc.hasOwnProperty('content')) {
-                doc.content = JSON.parse(doc.content);
+                var content = doc.content;
+                if (content[0] === '"') {
+                    content = content.slice(1, -1);
+                    content = content.split('\\"').join('"');
+                }
+                doc.content = JSON.parse(content);
             }
 
             let container = $('#object-info-container');
