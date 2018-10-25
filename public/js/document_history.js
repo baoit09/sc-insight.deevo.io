@@ -68,7 +68,7 @@ function getHistory(id, chaincode) {
                 }
                 let date = new Date(obj.Timestamp);
                 let dateString = moment(date).format('HH:mm:ss DD/MM/YYYY');
-                htmlContent += `<strong>Transaction: ${obj.TxId}, at ${dateString}</strong><pre>${JSON.stringify(doc, null, 2)}</pre>`;
+                htmlContent += `<strong>Transaction: <a href="/txid/${obj.TxId}" target="_blank">${obj.TxId}</a>, at ${dateString}</strong><pre>${JSON.stringify(doc, null, 2)}</pre>`;
             }
 
             let container = $('#object-info-container');
