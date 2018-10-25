@@ -32,6 +32,14 @@ router.get('/doc/:docid', function (req, res, next) {
   res.render('templates/document-info', { channelID: channelID, channelName: channelName, docid: docid, chaincode: chaincode });
 });
 
+router.get('/history/:docid', function (req, res, next) {
+  let channelID = 'mychannel';
+  let channelName = constants.ChannelDict[channelID];
+  let docid = req.params.docid;
+  let chaincode = 'supplychain';
+  res.render('templates/document-history', { channelID: channelID, channelName: channelName, docid: docid, chaincode: chaincode });
+});
+
 router.get('/channel/:channelID', function (req, res, next) {
   let channelID = req.params.channelID;
   let channelName = constants.ChannelDict[channelID];

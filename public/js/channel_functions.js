@@ -3,7 +3,7 @@ function getErrorMessage(error) {
     if (error === null || error === undefined) {
         return 'Could not get reponse!';
     }
-    
+
     const messageRe = /(message:.*\)<)/;
     const headerRe = /(<h1>(.|\n)*?<\/h1>)/;
 
@@ -203,8 +203,8 @@ function getDoc(id, chaincode) {
     let obj = {
         selector: {
             id: {
-    			$regex: `.*${id}.*`
-			}
+                $regex: `.*${id}.*`
+            }
         }
     }
 
@@ -230,13 +230,21 @@ function getDoc(id, chaincode) {
 
                 if (doc.hasOwnProperty('content')) {
                     var content = doc.content;
-                    content = JSON.parse(content);
-                    while ((typeof content) === 'string') {
+                    try {
                         content = JSON.parse(content);
+                    } catch (e) {
+                        break;
+                    }
+                    while ((typeof content) === 'string') {
+                        try {
+                            content = JSON.parse(content);
+                        } catch (e) {
+                            break;
+                        }
                     }
                     doc.content = content;
                 }
-                htmlContent += `<strong>${obj.Key}:</strong><pre>${JSON.stringify(doc, null, 2)}</pre>`;
+                htmlContent += `<strong>${obj.Key}: </strong> <a href="/history/${obj.Key}" target="_blank">View History</a><pre>${JSON.stringify(doc, null, 2)}</pre>`;
             }
 
             let container = $('#object-info-container');
