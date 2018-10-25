@@ -219,7 +219,7 @@ function getDoc(id, chaincode) {
 
             if (results.length < 1) {
                 let error = {
-                    responseText: 'Document not found'
+                    responseText: 'Object not found'
                 }
                 showSearchError(error);
                 return

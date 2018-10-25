@@ -2,7 +2,7 @@ $(document).ready(function () {
     if (docid === undefined || docid === null) {
         let info = $('#error-div');
         info.html('');
-        info.append('Document ID is missing!');
+        info.append('Object ID is missing!');
         info.show();
         return;
     }
