@@ -244,7 +244,7 @@ function getDoc(id, chaincode) {
                     }
                     doc.content = content;
                 }
-                htmlContent += `<strong>${obj.Key} </strong> <a href="/history/${obj.Key}" target="_blank">View History</a><pre>${JSON.stringify(doc, null, 2)}</pre>`;
+                htmlContent += `<strong>${obj.Key} </strong> <a href="/history/${obj.Key}" target="_blank">(View History)</a><pre>${JSON.stringify(doc, null, 2)}</pre>`;
             }
 
             let container = $('#object-info-container');
