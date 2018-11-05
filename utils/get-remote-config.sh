@@ -148,7 +148,7 @@ orderers:
       grpc-max-send-message-length: 10485760
       grpc-max-receive-message-length: 10485760
     tlsCACerts:
-      path: configs/crypto-config/orgs/org0/msp/tlscacerts/rca-org0-deevo-io-7054.pem
+      path: configs/crypto-config/orgs/org0/msp/tlscacerts/tls-rca-org0-deevo-io-7054.pem
 peers:" >>${CONFIG_PATH}/fabric-network-config/connection-profile.yaml
 for org in $ORGS; do
 	if [ "${org}" != "org0" ]; then
@@ -159,7 +159,7 @@ for org in $ORGS; do
       ssl-target-name-override: peer1.${org}.deevo.io
       grpc.keepalive_time_ms: 600000
     tlsCACerts:
-      path: configs/crypto-config/orgs/${org}/msp/tlscacerts/rca-${org}-deevo-io-7054.pem" >>${CONFIG_PATH}/fabric-network-config/connection-profile.yaml
+      path: configs/crypto-config/orgs/${org}/msp/tlscacerts/tls-rca-${org}-deevo-io-7054.pem" >>${CONFIG_PATH}/fabric-network-config/connection-profile.yaml
 	fi
 done
 echo "
@@ -168,9 +168,9 @@ for org in $ORGS; do
 	echo "  rca.${org}.deevo.io:
     url: https://rca.${org}.deevo.io:7054
     httpOptions:
-      verify: true
+      verify: false
     tlsCACerts:
-      path: configs/crypto-config/orgs/${org}/msp/tlscacerts/rca-${org}-deevo-io-7054.pem
+      path: configs/crypto-config/ca/tls.rca.${org}.deevo.io.pem
     registrar:
       - enrollId: rca-${org}-admin
         enrollSecret: rca-${org}-adminpw
