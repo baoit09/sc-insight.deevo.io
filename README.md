@@ -14,3 +14,6 @@
 6. run: npm start
 
   If it shows up: [API Server is running at http://localhost:3000/] means that api server is started up successfuly.
+
+Notes:
+- For error `node: not found`, run: `sudo apt-get install -y nodejs-legacy`
